@@ -1,27 +1,10 @@
-var keys = requier ('./keys.js');
+// var keys = requier ('./keys.js');
 var twitter = require('twitter');
-var client = new twitter(keys.twitterKeys);
+// var client = new twitter(keys.twitterKeys);
 var spotify = require('spotify');
 var request = require('request');
 
 var liri = {
-
-    twitterApi: {
-
-       getRecentTweets: function() {
-           var params = { screen_name: "JeffreyB05"}
-           client.get('statuses/user_timeline', params, this.getMyRecentTweetsRequest);
-       },
-
-       getMyRecentTweetsRequest: function (error, tweets, response) {
-           if (!error) {
-               for (var i = 0; i < tweets.length; i++) {
-                   console.log("This Tweet Was Created On " + tweets[i].created_at);
-                   console.log("Tweet Text: " + tweets[i].text + "\n");
-               }
-           }
-       } 
-    },
 
     omdbApi: {
 
@@ -30,7 +13,7 @@ var liri = {
                 movieName = "Mr. Nobody"
             }
 
-            var apiUrl = "http://www.omdbapi.com/?t=" + movieName +  "&y=&plot=short&r=json";
+            var apiUrl = "http://www.omdbapi.com/?t=" + movieName +  "&y=&plot=short&tomatoes=true&r=json";
 
             request(apiUrl, this.omdbResponse)
         },
@@ -46,9 +29,48 @@ var liri = {
                 console.log("Language: " + parsedBody.Language);
                 console.log("Plot: " + parsedBody.Plot);
                 console.log("Actors: " + parsedBody.Actors);
+                console.log("Rotten Tomatoes Rating: " + parsedBody.Tomatoes);
         }
     },
 },
+
+    spotifyApi: {
+
+        getSongInfo: function (songName) {
+            
+            if (!songName) {
+                songName = "The Sign";
+            }
+
+            spotify.search({ type: 'track', query: songName }, (error, data) => {
+                if (!error) {
+                    
+                console.log("Artist: " + data.tracks.items[0].artists[0].name);
+                console.log("Song Name: " + data.tracks.items[0].name);
+                console.log("Preview URL: " + data.tracks.items[0].preview_url);
+                console.log("Album Name: " + data.tracks.items[0].album.name + "\n");
+                    
+                }
+            });
+        }
+    },
+
+    twitterApi: {
+
+       getRecentTweets: function() {
+           var params = { screen_name: "JeffreyB05"}
+           client.get('statuses/user_timeline', params, this.getMyRecentTweets);
+       },
+
+       getMyRecentTweets: function (error, tweets, response) {
+           if (!error) {
+               for (var i = 0; i < tweets.length; i++) {
+                console.log("This Tweet Was Created On " + tweets[i].created_at);
+                console.log("Tweet Text: " + tweets[i].text + "\n");
+               }
+           }
+       } 
+    },
 };
 
 switch (process.argv[2]) {
@@ -57,6 +79,12 @@ switch (process.argv[2]) {
     break;
     case "movie-this":
     liri.omdbApi.getMovieInfo(process.argv[3]);
+    break;
+    case "spotify-this-song":
+    liri.spotifyApi.getSongInfo(process.argv[3]);
+    break;
+    default:
+    console.log("Please Try Again");
     break;
 };
 
