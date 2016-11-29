@@ -1,8 +1,13 @@
 // var keys = requier ('./keys.js');
 var twitter = require('twitter');
-// var client = new twitter(keys.twitterKeys);
 var spotify = require('spotify');
 var request = require('request');
+var client =  twitter ({
+    consumer_key: 'dGo6BsjEqAXEsFrEcM3WsztAF',
+    consumer_secret: 'oZeQGlXBwIGu8X64LK8jiv1Od7L2vLaJZYYuoGl89Ev29FEc5q',
+    access_token_key: '2207277643-ukEccM8566r4SKUwLQNJP6qGoTZqwfvfwCEHlwu',
+    access_token_secret: 'GUOfPLzMt6SdfRkMDnZaSFvyIgrdrXkYGTgeFMuDFudxy',
+});
 
 var liri = {
 
@@ -75,7 +80,7 @@ var liri = {
 
 switch (process.argv[2]) {
     case "my-tweets":
-    liri.twitterApi.getRecentTweets();
+    liri.twitterApi.getRecentTweets(process.argv[3]);
     break;
     case "movie-this":
     liri.omdbApi.getMovieInfo(process.argv[3]);
