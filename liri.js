@@ -2,6 +2,7 @@
 var twitter = require('twitter');
 var spotify = require('spotify');
 var request = require('request');
+var fs = require('./random.txt');
 var client =  twitter ({
     consumer_key: 'dGo6BsjEqAXEsFrEcM3WsztAF',
     consumer_secret: 'oZeQGlXBwIGu8X64LK8jiv1Od7L2vLaJZYYuoGl89Ev29FEc5q',
@@ -78,6 +79,24 @@ var liri = {
        } 
     },
 
+    doWhatItSays: {
+
+        readFileResult: function(error, data) {
+
+            if(err){
+                console.log(err);
+                return;
+            }
+
+            console.log(data);
+
+            fs.readFile("./random.txt", "utf8", readFileResult);
+        }
+        
+    }
+
+        
+
 };
 
 
@@ -91,6 +110,9 @@ switch (process.argv[2]) {
     break;
     case "spotify-this-song":
     liri.spotifyApi.getSongInfo(process.argv[3]);
+    break;
+    case "do-what-it-says":
+    liri.doWhatItSays.readFileResult(process.argv[3]);
     break;
     default:
     console.log("Please Try Again");
