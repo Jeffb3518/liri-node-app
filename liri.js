@@ -1,4 +1,4 @@
-// var keys = requier ('./keys.js');
+// var keys = requier ('./keys.js'); Having troubles getting this to work
 var twitter = require('twitter');
 var spotify = require('spotify');
 var request = require('request');
@@ -9,6 +9,7 @@ var client =  twitter ({
     access_token_secret: 'GUOfPLzMt6SdfRkMDnZaSFvyIgrdrXkYGTgeFMuDFudxy',
 });
 
+//creating Liri variable
 var liri = {
 
     omdbApi: {
@@ -76,7 +77,10 @@ var liri = {
            }
        } 
     },
+
 };
+
+
 
 switch (process.argv[2]) {
     case "my-tweets":
