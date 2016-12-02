@@ -1,8 +1,8 @@
 // var keys = requier ('./keys.js'); Having troubles getting this to work
+// var fs = require('./random.txt'); //When I use this my other commands don't work
 var twitter = require('twitter');
 var spotify = require('spotify');
 var request = require('request');
-var fs = require('./random.txt');
 var client =  twitter ({
     consumer_key: 'dGo6BsjEqAXEsFrEcM3WsztAF',
     consumer_secret: 'oZeQGlXBwIGu8X64LK8jiv1Od7L2vLaJZYYuoGl89Ev29FEc5q',
@@ -10,7 +10,7 @@ var client =  twitter ({
     access_token_secret: 'GUOfPLzMt6SdfRkMDnZaSFvyIgrdrXkYGTgeFMuDFudxy',
 });
 
-//creating Liri variable
+//creating Liri app
 var liri = {
 
     omdbApi: {
@@ -83,36 +83,31 @@ var liri = {
 
         readFileResult: function(error, data) {
 
-            if(err){
-                console.log(err);
+            if(error){
+                console.log(error);
                 return;
             }
 
             console.log(data);
 
-            fs.readFile("./random.txt", "utf8", readFileResult);
+            fs.readFile("random.txt", "utf8", readFileResult);
         }
         
     }
-
-        
-
 };
-
-
 
 switch (process.argv[2]) {
     case "my-tweets":
     liri.twitterApi.getRecentTweets(process.argv[3]);
     break;
     case "movie-this":
-    liri.omdbApi.getMovieInfo(process.argv[3]);
+    liri.omdbApi.getMovieInfo(process.argv[4]);
     break;
     case "spotify-this-song":
-    liri.spotifyApi.getSongInfo(process.argv[3]);
+    liri.spotifyApi.getSongInfo(process.argv[5]);
     break;
     case "do-what-it-says":
-    liri.doWhatItSays.readFileResult(process.argv[3]);
+    liri.doWhatItSays.readFileResult(process.argv[6]);
     break;
     default:
     console.log("Please Try Again");
