@@ -13,9 +13,9 @@ var client =  twitter ({
 //creating Liri app
 var liri = {
 
-    omdbApi: {
+    requestApi: {
 
-        getMovieInfo: function (movieName) {
+        getMovie: function (movieName) {
             if (!movieName) {
                 movieName = "Mr. Nobody"
             }
@@ -72,8 +72,8 @@ var liri = {
        getMyRecentTweets: function (error, tweets, response) {
            if (!error) {
                for (var i = 0; i < tweets.length; i++) {
-                console.log("This Tweet Was Created On " + tweets[i].created_at);
-                console.log("Tweet Text: " + tweets[i].text + "\n");
+                console.log("Tweet Created On " + tweets[i].created_at);
+                console.log("Tweet: " + tweets[i].text + "\n");
                }
            }
        } 
@@ -101,7 +101,7 @@ switch (process.argv[2]) {
     liri.twitterApi.getRecentTweets(process.argv[3]);
     break;
     case "movie-this":
-    liri.omdbApi.getMovieInfo(process.argv[4]);
+    liri.requestApi.getMovie(process.argv[4]);
     break;
     case "spotify-this-song":
     liri.spotifyApi.getSongInfo(process.argv[5]);
